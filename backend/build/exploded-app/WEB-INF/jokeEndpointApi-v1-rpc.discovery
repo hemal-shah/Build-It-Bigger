@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"zRMgE0l9nVDW4S28VYYcYQF9UW4/eOlchqd7xCw6lLAH-uzbmAINdi8\"",
+ "etag": "\"zRMgE0l9nVDW4S28VYYcYQF9UW4/nC5ogcQdSM6EcCbi4URX4vut5vw\"",
  "discoveryVersion": "v1",
  "id": "jokeEndpointApi:v1",
  "name": "jokeEndpointApi",
@@ -13,8 +13,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://myApplicationId.appspot.com/_ah/api/",
- "rpcUrl": "https://myApplicationId.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://build-it-bigger-1332.appspot.com/_ah/api/",
+ "rpcUrl": "https://build-it-bigger-1332.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
