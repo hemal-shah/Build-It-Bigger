@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Show Message</string>
+    <string name="no_data_obtained">Please pass a joke through intent!</string>
+</resources>
