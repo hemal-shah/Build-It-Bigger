@@ -27,6 +27,7 @@ public class MainActivityFragment extends Fragment {
 
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
 
+        //TODO add your own test device id...from the logcat.
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("1B9E645F6AEB9B725AACE600DC298402")
