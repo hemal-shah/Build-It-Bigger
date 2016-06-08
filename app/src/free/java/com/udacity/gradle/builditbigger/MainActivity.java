@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,36 +18,41 @@ import hemal.mukesh.shah.showmessage.ShowJoke;
 
 public class MainActivity extends AppCompatActivity {
 
+    ProgressDialog progressDialog = null;
     InterstitialAd interstitialAd = null;
+
+    String storedJoke = "Empty Joke retrieved!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Getting your joke....");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                fetchJokeCall();
+                showJoke(storedJoke);
             }
         });
     }
 
-    public void fetchJokeCall() {
-        new FetchJokeTask().execute(new Callback() {
-            @Override
-            public void displayJoke(String joke) {
-                Intent intent = new Intent(MainActivity.this, ShowJoke.class);
-                intent.putExtra(ShowJoke.PASS_JOKE_TAG, joke);
-                startActivity(intent);
-            }
-        });
 
+    public void showJoke(String joke) {
+        Intent intent = new Intent(MainActivity.this, ShowJoke.class);
+        intent.putExtra(ShowJoke.PASS_JOKE_TAG, joke);
+        startActivity(intent);
     }
 
     public void tellJoke(View view) {
+
+        progressDialog.show();
 
         //TODO add your own test device id...from the logcat.
         AdRequest adRequest = new AdRequest.Builder()
@@ -56,10 +62,20 @@ public class MainActivity extends AppCompatActivity {
 
         interstitialAd.loadAd(adRequest);
 
-        if (interstitialAd.isLoaded()) {
-            interstitialAd.show();
-        } else {
-            fetchJokeCall();
-        }
+        new FetchJokeTask().execute(new Callback() {
+            @Override
+            public void displayJoke(String joke) {
+
+                progressDialog.hide();
+
+                if (interstitialAd.isLoaded()) {
+                    storedJoke = joke;
+                    interstitialAd.show();
+                }
+                showJoke(joke);
+            }
+        });
+
+
     }
 }
