@@ -39,3 +39,24 @@ appengine {
         getDiscoveryDocsOnBuild = true
     }
 }
+
+
+task finalOptionalTask(dependsOn: [":backend:appengineRun", ":app:connectedCheck"]){
+    group ("Optional Task")
+    project(":backend").afterEvaluate {
+        backend -> backend.extensions.appengine.daemon = true
+    }
+
+    doLast {
+        println "Started the server!!"
+    }
+}
+
+task stopLocalServer(dependsOn: ":backend:appengineStop") {
+    group ("Optional Task")
+    doLast{
+        println "Stopped the server!"
+    }
+}
+
+finalOptionalTask.finalizedBy ":backend:stopLocalServer"
